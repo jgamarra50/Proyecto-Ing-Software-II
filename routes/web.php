@@ -43,6 +43,7 @@ Route::get('/imagenes/{filename}', function (string $filename) {
     ]);
 });
 
+<<<<<<< HEAD
 // Ruta para gestionar vehículos con parámetro
 Route::get('/gestionar-vehiculos', function () {
     return view('gestionar-vehiculos');
@@ -51,25 +52,52 @@ Route::get('/gestionar-vehiculos', function () {
 Route::get('/realizar-pago', function () {
     return view('realizar-pago');
 });
-
-Route::get('/elegir-metodo-entrega', function () {
-    return view('elegir-metodo-entrega');
+=======
+Route::get('/realizar-pago', function () {
+    return view('realizar-pago');
 });
 
-Route::get('/registrar-entrega-vehiculo', function () {
-    return view('registrar-entrega-de-vehiculo');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::get('/register', function () {
+    return view('auth.register');
 });
 
-Route::get('/estado-vehiculo', function () {
-    return view('estado-vehiculo');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/historial-reservas', function () {
+        return view('historial-reservas');
+    });
+
+    Route::get('/gestionar-vehiculos', function () {
+        return view('gestionar-vehiculos');
+    });
+
+    Route::get('/registrar-mantenimiento-completo', function () {
+        return view('registrar-mantenimiento-completo');
+    });
+
+    Route::get('/reportar-incidencias', function () {
+        return view('reportar-incidencias');
+    });
 });
 
-Route::get('/registrar-mantenimiento-completo', function () {
-    return view('registrar-mantenimiento-completo');
-});
+Route::middleware(['auth', 'role:repartidor'])->group(function () {
+    Route::get('/elegir-metodo-entrega', function () {
+        return view('elegir-metodo-entrega');
+    });
+>>>>>>> 834c87bb476fdc25a55567420878613c4e62b2e0
 
-Route::get('/reportar-incidencias', function () {
-    return view('reportar-incidencias');
+    Route::get('/registrar-entrega-vehiculo', function () {
+        return view('registrar-entrega-de-vehiculo');
+    });
+
+    Route::get('/estado-vehiculo', function () {
+        return view('estado-vehiculo');
+    });
 });
 
 Route::get('/historial-reservas', function () {

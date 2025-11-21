@@ -60,6 +60,17 @@
                             <p id="emailError" class="mt-1 text-sm text-red-600 hidden">Debe ingresar un correo electrónico válido</p>
                         </div>
 
+                        <!-- Rol -->
+                        <div>
+                            <label for="role" class="block text-sm font-medium">Rol</label>
+                            <select id="role" name="role" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" required>
+                                <option value="cliente">Cliente</option>
+                                <option value="repartidor">Repartidor</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                            <p id="roleError" class="mt-1 text-sm text-red-600 hidden">Debe seleccionar un rol</p>
+                        </div>
+
                         <!-- Contraseña -->
                         <div>
                             <label for="password" class="block text-sm font-medium">Contraseña</label>
@@ -165,6 +176,13 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     const terms = document.getElementById('terms');
     if (!terms.checked) {
         showError('terms', 'termsError');
+        isValid = false;
+    }
+
+    // Validar rol
+    const role = document.getElementById('role');
+    if (!role.value) {
+        showError('role', 'roleError');
         isValid = false;
     }
 

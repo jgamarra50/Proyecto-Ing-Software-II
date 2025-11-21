@@ -21,6 +21,7 @@ class RegisteredUserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email',
                 'password' => ['required', 'confirmed', Password::default()],
+                'role' => 'required|in:cliente,repartidor,admin',
             ]);
 
             Log::info("Validación correcta", $validated);
@@ -29,6 +30,7 @@ class RegisteredUserController extends Controller
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
+                'role' => $validated['role'],
             ]);
 
             Log::info("Usuario registrado exitosamente", [
