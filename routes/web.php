@@ -2,15 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
-// Ruta para mostrar el formulario de inicio de sesión
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-
-// Ruta para procesar el inicio de sesión
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
-
-// ... existing code ...
-
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
@@ -52,6 +43,11 @@ Route::get('/imagenes/{filename}', function (string $filename) {
     ]);
 });
 
+// Ruta para gestionar vehículos con parámetro
+Route::get('/gestionar-vehiculos', function () {
+    return view('gestionar-vehiculos');
+})->name('gestionar-vehiculos');
+
 Route::get('/realizar-pago', function () {
     return view('realizar-pago');
 });
@@ -66,14 +62,13 @@ Route::get('/register', function () {
     return view('auth.register');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/historial-reservas', function () {
-        return view('historial-reservas');
-    });
+Route::get('/historial-reservas', function () {
+    return view('historial-reservas');
+});
 
-    Route::get('/gestionar-vehiculos', function () {
-        return view('gestionar-vehiculos');
-    });
+Route::get('/gestionar-vehiculos', function () {
+    return view('gestionar-vehiculos');
+});
 
     Route::get('/registrar-mantenimiento-completo', function () {
         return view('registrar-mantenimiento-completo');
@@ -98,7 +93,16 @@ Route::middleware(['auth', 'role:repartidor'])->group(function () {
     });
 });
 
+Route::get('/historial-reservas', function () {
+    return view('historial-reservas');
+});
+
 // Rutas de autenticación
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
