@@ -2,6 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+// Ruta para mostrar el formulario de inicio de sesión
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+// Ruta para procesar el inicio de sesión
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+
+// ... existing code ...
+
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {

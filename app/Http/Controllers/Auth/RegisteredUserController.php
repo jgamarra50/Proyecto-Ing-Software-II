@@ -25,9 +25,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
+        // No iniciar sesión automáticamente
+        // Auth::login($user);
+        // $request->session()->regenerate();
 
-        return redirect()->intended('/');
+        // Redirigir a la vista de inicio de sesión
+        return redirect()->route('login');
     }
 }
