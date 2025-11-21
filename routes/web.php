@@ -219,4 +219,99 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/registrar-mantenimiento-completo', fn () => view('registrar-mantenimiento-completo'));
 
     Route::get('/reportar-incidencias', fn () => view('reportar-incidencias'));
+
+    Route::get('/admin/dashboard', function () {
+        $totalUsuarios = DB::table('users')->count();
+        $usuariosMesPasado = DB::table('users')
+            ->whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])
+            ->count();
+        $crecimientoUsuarios = $usuariosMesPasado ? '+' . number_format((($totalUsuarios - $usuariosMesPasado) / max(1,$usuariosMesPasado)) * 100, 1) . '%' : '+0%';
+
+        $ingresosMes = (int) DB::table('reservas')
+            ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->sum('precio');
+
+        $ordenesPendientes = DB::table('reservas')
+            ->leftJoin('entregas', 'reservas.id', '=', 'entregas.reserva_id')
+            ->whereNull('entregas.id')
+            ->count();
+
+        $productosActivos = DB::table('reservas')
+            ->whereNotNull('vehiculo')
+            ->distinct('vehiculo')
+            ->count('vehiculo');
+
+        $desde = now()->subMonths(5)->startOfMonth();
+        $ventas = DB::table('reservas')
+            ->select('id', 'precio', 'created_at')
+            ->where('created_at', '>=', $desde)
+            ->get();
+        $ventasPorMes = [];
+        foreach (range(0,5) as $i) {
+            $m = now()->subMonths(5 - $i)->format('Y-m');
+            $ventasPorMes[$m] = 0;
+        }
+        foreach ($ventas as $v) {
+            $key = \Carbon\Carbon::parse($v->created_at)->format('Y-m');
+            if (isset($ventasPorMes[$key])) {
+                $ventasPorMes[$key] += (int)($v->precio ?? 0);
+            }
+        }
+        $ventasLabels = array_keys($ventasPorMes);
+        $ventasValues = array_values($ventasPorMes);
+        $miniSerie = $ventasValues;
+
+        $productos = DB::table('reservas')
+            ->select('vehiculo', DB::raw('COUNT(*) as c'))
+            ->whereNotNull('vehiculo')
+            ->groupBy('vehiculo')
+            ->orderByDesc('c')
+            ->limit(5)
+            ->get();
+        $productosLabels = $productos->pluck('vehiculo')->all();
+        $productosValues = $productos->pluck('c')->map(fn($x)=> (int)$x)->all();
+
+        $roles = DB::table('users')
+            ->select('role', DB::raw('COUNT(*) as c'))
+            ->groupBy('role')
+            ->get();
+        $rolesLabels = $roles->pluck('role')->map(fn($r)=> $r ?: 'sin_rol')->all();
+        $rolesValues = $roles->pluck('c')->map(fn($x)=> (int)$x)->all();
+
+        $transacciones = DB::table('reservas')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get()
+            ->map(function ($r) {
+                $ent = DB::table('entregas')->where('reserva_id', $r->id)->exists();
+                $r->estado = $ent ? 'Completada' : 'Pendiente';
+                return $r;
+            });
+
+        $usuariosRecientes = DB::table('users')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+
+        $eventos = DB::table('reservas')
+            ->select('fecha')
+            ->where('fecha', '>=', now()->startOfMonth()->toDateString())
+            ->where('fecha', '<=', now()->endOfMonth()->toDateString())
+            ->orderBy('fecha')
+            ->limit(20)
+            ->pluck('fecha')
+            ->map(fn($d)=> (string)$d)
+            ->all();
+
+        $actividad = [];
+        foreach ($transacciones as $t) {
+            $actividad[] = ['texto' => 'Reserva #' . $t->id . ' creada', 'fecha' => \Carbon\Carbon::parse($t->created_at)->diffForHumans()];
+        }
+
+        return view('dashboard-admin', compact(
+            'totalUsuarios','crecimientoUsuarios','ingresosMes','ordenesPendientes','productosActivos',
+            'ventasLabels','ventasValues','miniSerie','productosLabels','productosValues',
+            'rolesLabels','rolesValues','transacciones','usuariosRecientes','eventos','actividad'
+        ));
+    });
 });
