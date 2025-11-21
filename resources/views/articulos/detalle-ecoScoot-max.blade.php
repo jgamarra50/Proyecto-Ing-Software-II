@@ -30,7 +30,7 @@
                 <button type="button" data-duration="dia" class="px-3 py-1 rounded-full bg-gray-100 text-sm">Día completo</button>
             </div>
             <div id="price" class="text-emerald-600 text-xl font-bold mb-4">$16.000 COP</div>
-            <a id="reserveBtn" href="/elegir-metodo-entrega" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
+            <a id="reserveBtn" href="{{ route('gestionar-vehiculos', ['vehiculo' => 'ecoScoot-max']) }}" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
             <div class="mt-6 text-gray-600">Tarifa inicial: $8.000 COP</div>
             <p class="mt-4 text-gray-600">Equilibrio entre rendimiento y practicidad para recorridos urbanos rápidos.</p>
         </div>

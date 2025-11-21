@@ -20,7 +20,52 @@
                             </h1>
                             <p class="mt-2 text-sm text-slate-600">Completa el formulario para realizar una reserva de un vehiculos electrico.</p>
                         </div>
-                        <form action="#" method="post" novalidate>
+                        @php
+    $vehiculos = [
+        'ecoScoot-max' => [
+            'nombre' => 'EcoScoot Max',
+            'descripcion' => 'Equilibrio entre rendimiento y practicidad para recorridos urbanos rápidos.',
+            'precio' => '$16.000 COP',
+            'tarifa_inicial' => '$8.000 COP'
+        ],
+        'ecoMoto-pro' => [
+            'nombre' => 'EcoMoto Pro',
+            'descripcion' => 'Ideal para usuarios que buscan rendimiento superior sin comprometer la sostenibilidad.',
+            'precio' => '$28.000 COP',
+            'tarifa_inicial' => '$12.000 COP'
+        ],
+        'ecoScoot-lite' => [
+            'nombre' => 'EcoScoot Lite',
+            'descripcion' => 'Vehículo ligero y eficiente para desplazamientos cortos.',
+            'precio' => '$12.000 COP',
+            'tarifa_inicial' => '$6.000 COP'
+        ],
+        'ecoMoto-standard' => [
+            'nombre' => 'EcoMoto Standard',
+            'descripcion' => 'Combinación de confort y eficiencia para uso diario.',
+            'precio' => '$20.000 COP',
+            'tarifa_inicial' => '$10.000 COP'
+        ],
+        'ecoBike-one' => [
+            'nombre' => 'EcoBike One',
+            'descripcion' => 'Bicicleta eléctrica versátil para todo tipo de terreno.',
+            'precio' => '$18.000 COP',
+            'tarifa_inicial' => '$9.000 COP'
+        ]
+    ];
+    $vehiculoSeleccionado = request()->get('vehiculo');
+    $infoVehiculo = $vehiculos[$vehiculoSeleccionado] ?? null;
+@endphp
+<form action="#" method="post" novalidate>
+<div class="p-8 space-y-10">
+    @if($infoVehiculo)
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold">{{ $infoVehiculo['nombre'] }}</h2>
+        <p class="text-gray-700">{{ $infoVehiculo['descripcion'] }}</p>
+        <p class="text-emerald-600 font-bold mt-2">Precio: {{ $infoVehiculo['precio'] }}</p>
+        <p class="text-gray-600">Tarifa inicial: {{ $infoVehiculo['tarifa_inicial'] }}</p>
+    </div>
+    @endif
                             <div class="p-8 space-y-10">
                                 <section class="space-y-6">
                                     <h2 class="text-lg font-medium">Datos personales</h2>

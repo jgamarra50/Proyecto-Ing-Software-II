@@ -31,7 +31,7 @@
                 <button type="button" data-duration="dia" class="px-3 py-1 rounded-full bg-gray-100 text-sm">Día completo</button>
             </div>
             <div id="price" class="text-emerald-600 text-xl font-bold mb-4">$28.000 COP</div>
-            <a id="reserveBtn" href="/elegir-metodo-entrega" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
+            <a id="reserveBtn" href="{{ route('gestionar-vehiculos', ['vehiculo' => 'ecoMoto-pro']) }}" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
             <div class="mt-6 text-gray-600">Tarifa inicial: $12.000 COP</div>
             <p class="mt-4 text-gray-600">Ideal para usuarios que buscan rendimiento superior sin comprometer la sostenibilidad.</p>
         </div>
