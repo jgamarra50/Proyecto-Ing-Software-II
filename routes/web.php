@@ -115,8 +115,6 @@ Route::middleware(['auth'])->group(function () {
             'vehiculo' => 'nullable|string',
             'duracion' => 'nullable|string',
             'precio' => 'nullable|integer',
-            'nombre' => 'required|string',
-            'email' => 'required|email',
             'telefono' => 'required|string',
             'tipo_doc' => 'required|string',
             'num_doc' => 'required|string',
@@ -160,8 +158,8 @@ Route::middleware(['auth'])->group(function () {
             'vehiculo' => $data['vehiculo'] ?? null,
             'duracion' => $data['duracion'] ?? $data['duracion_select'] ?? null,
             'precio' => $data['precio'] ?? null,
-            'nombre' => $data['nombre'],
-            'email' => $data['email'],
+            'nombre' => Auth::user()->name,
+            'email' => Auth::user()->email,
             'telefono' => $data['telefono'],
             'tipo_doc' => $data['tipo_doc'],
             'num_doc' => $data['num_doc'],
@@ -187,7 +185,7 @@ Route::middleware(['auth'])->group(function () {
             'reserva_id' => $id,
         ]);
 
-        return redirect('/realizar-pago');
+        return redirect('/realizar-pago?'.$qs);
     })->name('reservas.store');
 
     Route::delete('/reservas/{id}', function (int $id) {

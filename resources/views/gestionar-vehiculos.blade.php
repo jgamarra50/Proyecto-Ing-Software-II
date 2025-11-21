@@ -110,11 +110,11 @@
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div>
                                             <label for="nombre" class="block text-sm font-medium">Nombre completo</label>
-                                            <input id="nombre" name="nombre" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Juan Perez" />
+                                            <input id="nombre" value="{{ auth()->user()->name }}" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 bg-gray-100" disabled />
                                         </div>
                                         <div>
-                                            <label for="email" class="block text-sm font-medium">Correo electronico</label>
-                                            <input id="email" name="email" required type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="ejemplo@correo.com" />
+                                            <label for="email" class="block text-sm font-medium">Correo electrónico</label>
+                                            <input id="email" value="{{ auth()->user()->email }}" type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 bg-gray-100" disabled />
                                         </div>
                                         <div>
                                             <label for="telefono" class="block text-sm font-medium">Telefono</label>
@@ -224,7 +224,7 @@
                                                                 </section>
                                                             </div>
                                                             <div class="flex items-center justify-end gap-3 p-6 border-t">
-                        <button type="submit" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Confirmar Reserva</button>
+                        <a href="/realizar-pago?{{ $qs }}" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Confirmar Reserva</a>
                                                                 <a href="/" class="rounded-lg border border-slate-300 px-5 py-2.5 text-slate-700 hover:bg-slate-50">
                                                                     Cancelar Reserva
                                                                 </a>
