@@ -1,9 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/articulos', function () {
+    return view('articulos');
+});
+
+Route::get('/imagenes/{filename}', function (string $filename) {
+    $safe = basename($filename);
+    $path = base_path('imagenes/'.$safe);
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    return response()->file($path, [
+        'Content-Type' => mime_content_type($path),
+    ]);
 });
 
 Route::get('/realizar-pago', function () {
@@ -41,3 +58,12 @@ Route::get('/estado-vehiculo', function () {
 Route::get('/registrar-mantenimiento-completo', function () {
     return view('registrar-mantenimiento-completo');
 });
+
+Route::get('/reportar-incidencias', function () {
+    return view('reportar-incidencias');
+});
+
+// Rutas de autenticación
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
