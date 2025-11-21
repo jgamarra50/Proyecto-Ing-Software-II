@@ -10,7 +10,7 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (! $request->user() || $request->user()->role !== $role) {
+        if (! $request->user() || ! $request->user()->hasRole($role)) {
             return redirect()->route('login');
         }
 

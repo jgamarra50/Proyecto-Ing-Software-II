@@ -31,7 +31,7 @@
                         <div class="px-4 py-3">
                             <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
                             @php
-                                $roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'];
+                                $roleMap = ['user'=>'Cliente','admin'=>'Administrador'];
                             @endphp
                             <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
                         </div>
