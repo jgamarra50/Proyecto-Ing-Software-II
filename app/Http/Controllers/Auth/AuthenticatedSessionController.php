@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function create()
+    {
+        return view('auth.login');
+    }
+
     public function store(Request $request)
     {
         // Validaciones del formulario

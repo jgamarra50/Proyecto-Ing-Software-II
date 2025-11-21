@@ -64,6 +64,7 @@
                 <div class="h-6 w-px bg-gray-200 hidden lg:block"></div>
 
                 <div class="flex items-center gap-4">
+                    @guest
                     <a href="/login" class="flex items-center gap-2 text-gray-700 hover:text-black transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -73,6 +74,13 @@
                     <a href="/register" class="hidden sm:flex bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-lg shadow-black/20">
                         Registrarse
                     </a>
+                    @endguest
+                    @auth
+                    <div class="flex flex-col items-center">
+                        <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
+                        <div class="text-xs text-gray-700 mt-1">EcoUser</div>
+                    </div>
+                    @endauth
                 </div>
             </div>
         </div>
