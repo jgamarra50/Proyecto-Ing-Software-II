@@ -92,12 +92,21 @@
                     </p>
                     
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="/gestionar-vehiculos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">
-                            Gestionar Vehículos
-                        </a>
-                        <a href="/historial-reservas" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">
-                            Ver Historial
-                        </a>
+                        @auth
+                            @if(auth()->user()->role === 'admin')
+                                <a href="/gestionar-vehiculos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Gestionar Vehículos</a>
+                                <a href="/historial-reservas" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Ver Historial</a>
+                            @elseif(auth()->user()->role === 'repartidor')
+                                <a href="/registrar-entrega-vehiculo" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Registrar Entrega</a>
+                                <a href="/estado-vehiculo" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Estado del Vehículo</a>
+                            @else
+                                <a href="/articulos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ver Artículos</a>
+                                <a href="/realizar-pago" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Realizar Pago</a>
+                            @endif
+                        @else
+                            <a href="/login" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ingresar</a>
+                            <a href="/articulos" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Ver Artículos</a>
+                        @endauth
                     </div>
                 </div>
                 

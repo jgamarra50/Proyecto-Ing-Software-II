@@ -66,32 +66,36 @@ Route::get('/register', function () {
     return view('auth.register');
 });
 
-Route::get('/historial-reservas', function () {
-    return view('historial-reservas');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/historial-reservas', function () {
+        return view('historial-reservas');
+    });
+
+    Route::get('/gestionar-vehiculos', function () {
+        return view('gestionar-vehiculos');
+    });
+
+    Route::get('/registrar-mantenimiento-completo', function () {
+        return view('registrar-mantenimiento-completo');
+    });
+
+    Route::get('/reportar-incidencias', function () {
+        return view('reportar-incidencias');
+    });
 });
 
-Route::get('/gestionar-vehiculos', function () {
-    return view('gestionar-vehiculos');
-});
+Route::middleware(['auth', 'role:repartidor'])->group(function () {
+    Route::get('/elegir-metodo-entrega', function () {
+        return view('elegir-metodo-entrega');
+    });
 
-Route::get('/elegir-metodo-entrega', function () {
-    return view('elegir-metodo-entrega');
-});
+    Route::get('/registrar-entrega-vehiculo', function () {
+        return view('registrar-entrega-de-vehiculo');
+    });
 
-Route::get('/registrar-entrega-vehiculo', function () {
-    return view('registrar-entrega-de-vehiculo');
-});
-
-Route::get('/estado-vehiculo', function () {
-    return view('estado-vehiculo');
-});
-
-Route::get('/registrar-mantenimiento-completo', function () {
-    return view('registrar-mantenimiento-completo');
-});
-
-Route::get('/reportar-incidencias', function () {
-    return view('reportar-incidencias');
+    Route::get('/estado-vehiculo', function () {
+        return view('estado-vehiculo');
+    });
 });
 
 // Rutas de autenticación
