@@ -156,7 +156,7 @@
                                     <span class="text-xs text-gray-400">•</span>
                                     <span class="text-sm text-gray-500">Autonomía: 45 km</span>
                                 </div>
-                                <a href="#" class="rounded-lg bg-black px-5 py-2.5 text-white hover:bg-gray-800 transition font-medium">Reservar</a>
+                                <a href="/articulos/eco-moto-standard" class="rounded-lg bg-black px-5 py-2.5 text-white hover:bg-gray-800 transition font-medium">Reservar</a>
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                                     <span class="text-xs text-gray-400">•</span>
                                     <span class="text-sm text-gray-500">Autonomía: 70 km</span>
                                 </div>
-                                <a href="#" class="rounded-lg bg-black px-5 py-2.5 text-white hover:bg-gray-800 transition font-medium">Reservar</a>
+                                <a href="/articulos/eco-moto-pro" class="rounded-lg bg-black px-5 py-2.5 text-white hover:bg-gray-800 transition font-medium">Reservar</a>
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                                     <span class="text-sm font-bold text-emerald-600">$20/hora</span>
                                     <span class="text-xs text-gray-400 ml-2">Escalera</span>
                                 </div>
-                                <a href="#" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
+                                <a href="/articulos/eco-scoot-max" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
                             </div>
                         </div>
 
@@ -226,7 +226,7 @@
                                     <span class="text-sm font-bold text-emerald-600">$18/hora</span>
                                     <span class="text-xs text-gray-400 ml-2">Escalera</span>
                                 </div>
-                                <a href="#" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
+                                <a href="/articulos/eco-scoot-lite" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
                             </div>
                         </div>
 
@@ -243,7 +243,7 @@
                                     <span class="text-sm font-bold text-emerald-600">$15/hora</span>
                                     <span class="text-xs text-gray-400 ml-2">Escalera</span>
                                 </div>
-                                <a href="#" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
+                                <a href="/articulos/ecobike-one" class="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition text-sm font-medium">Reservar</a>
                             </div>
                         </div>
                     </div>

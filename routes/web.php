@@ -12,6 +12,26 @@ Route::get('/articulos', function () {
     return view('articulos');
 });
 
+Route::get('/articulos/eco-moto-standard', function () {
+    return view('articulos.detalle-ecoMoto-standard');
+});
+
+Route::get('/articulos/eco-moto-pro', function () {
+    return view('articulos.detalle-ecoMoto-pro');
+});
+
+Route::get('/articulos/eco-scoot-max', function () {
+    return view('articulos.detalle-ecoScoot-max');
+});
+
+Route::get('/articulos/eco-scoot-lite', function () {
+    return view('articulos.detalle-ecoScoot-lite');
+});
+
+Route::get('/articulos/ecobike-one', function () {
+    return view('articulos.detalle-ecoBike-one');
+});
+
 Route::get('/imagenes/{filename}', function (string $filename) {
     $safe = basename($filename);
     $path = base_path('imagenes/'.$safe);
