@@ -19,7 +19,7 @@
         <p class="mt-2 text-sm text-slate-600">Completa los datos para procesar tu pago de forma segura.</p>
       </div>
 
-      <form action="#" method="post" novalidate>
+      <form id="pago-form" action="#" method="post" novalidate>
         <div class="p-8 space-y-8">
           <section class="space-y-4">
             <h2 class="text-sm font-medium text-slate-700">Método de pago</h2>
@@ -45,23 +45,23 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div class="sm:col-span-2">
                 <label for="titular" class="block text-sm font-medium">Nombre del titular</label>
-                <input id="titular" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Como aparece en la tarjeta" />
+                <input id="titular" name="titular" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Como aparece en la tarjeta" />
               </div>
               <div class="sm:col-span-2">
                 <label for="numero-tarjeta" class="block text-sm font-medium">Número de tarjeta</label>
-                <input id="numero-tarjeta" type="text" inputmode="numeric" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="0000 0000 0000 0000" />
+                <input id="numero-tarjeta" name="numero_tarjeta" required type="text" inputmode="numeric" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="0000 0000 0000 0000" />
               </div>
               <div>
                 <label for="expiracion" class="block text-sm font-medium">Expiración</label>
-                <input id="expiracion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="MM/AA" />
+                <input id="expiracion" name="expiracion" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="MM/AA" />
               </div>
               <div>
                 <label for="cvv" class="block text-sm font-medium">CVV</label>
-                <input id="cvv" type="password" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="3 o 4 dígitos" />
+                <input id="cvv" name="cvv" required type="password" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="3 o 4 dígitos" />
               </div>
               <div>
                 <label for="tipo-doc" class="block text-sm font-medium">Tipo de documento</label>
-                <select id="tipo-doc" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <select id="tipo-doc" name="tipo_doc" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="nit">NIT</option>
@@ -70,19 +70,19 @@
               </div>
               <div>
                 <label for="num-doc" class="block text-sm font-medium">Número de documento</label>
-                <input id="num-doc" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
+                <input id="num-doc" name="num_doc" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
               </div>
               <div>
                 <label for="correo" class="block text-sm font-medium">Correo electrónico</label>
-                <input id="correo" type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="tucorreo@ejemplo.com" />
+                <input id="correo" name="correo" required type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="tucorreo@ejemplo.com" />
               </div>
               <div>
                 <label for="telefono" class="block text-sm font-medium">Teléfono</label>
-                <input id="telefono" type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 3001234567" />
+                <input id="telefono" name="telefono" required type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 3001234567" />
               </div>
               <div class="sm:col-span-2">
                 <label for="direccion" class="block text-sm font-medium">Dirección de facturación</label>
-                <input id="direccion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Calle, número, barrio, ciudad" />
+                <input id="direccion" name="direccion" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Calle, número, barrio, ciudad" />
               </div>
             </div>
 
@@ -95,7 +95,7 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div class="sm:col-span-2">
                 <label for="banco" class="block text-sm font-medium">Banco</label>
-                <select id="banco" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <select id="banco" name="banco" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <option value="bancolombia">Bancolombia</option>
                   <option value="davivienda">Davivienda</option>
                   <option value="bbva">BBVA</option>
@@ -108,7 +108,7 @@
               </div>
               <div>
                 <label for="pse-tipo-doc" class="block text-sm font-medium">Tipo de documento</label>
-                <select id="pse-tipo-doc" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <select id="pse-tipo-doc" name="pse_tipo_doc" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="nit">NIT</option>
@@ -117,19 +117,19 @@
               </div>
               <div>
                 <label for="pse-num-doc" class="block text-sm font-medium">Número de documento</label>
-                <input id="pse-num-doc" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
+                <input id="pse-num-doc" name="pse_num_doc" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
               </div>
               <div>
                 <label for="pse-nombre" class="block text-sm font-medium">Nombre completo</label>
-                <input id="pse-nombre" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Tu nombre" />
+                <input id="pse-nombre" name="pse_nombre" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Tu nombre" />
               </div>
               <div>
                 <label for="pse-correo" class="block text-sm font-medium">Correo electrónico</label>
-                <input id="pse-correo" type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="tucorreo@ejemplo.com" />
+                <input id="pse-correo" name="pse_correo" required type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="tucorreo@ejemplo.com" />
               </div>
               <div>
                 <label for="pse-telefono" class="block text-sm font-medium">Teléfono</label>
-                <input id="pse-telefono" type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 3001234567" />
+                <input id="pse-telefono" name="pse_telefono" required type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 3001234567" />
               </div>
             </div>
 
@@ -141,9 +141,21 @@
 
         <div class="flex items-center justify-end gap-3 p-6 border-t">
           <a href="/" class="rounded-lg border border-slate-300 px-5 py-2.5 text-slate-700 hover:bg-slate-50">Cancelar</a>
-          <button type="button" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Pagar ahora</button>
+          <button type="button" id="pagar-btn" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Pagar ahora</button>
         </div>
       </form>
+      <div id="exito" class="p-8 hidden">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-emerald-600">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.28-2.03a.75.75 0 0 1 0 1.06l-5.25 5.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 1 1 1.06-1.06l1.72 1.72 4.72-4.72a.75.75 0 0 1 1.06 0z" clip-rule="evenodd" />
+          </svg>
+          <h2 class="text-2xl font-semibold text-emerald-700">Reserva exitosa</h2>
+        </div>
+        <p class="mt-2 text-gray-600">Tu pago fue procesado correctamente.</p>
+        <div class="mt-6">
+          <a href="/" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Devolver al inicio</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -158,16 +170,33 @@
       function actualizarMetodo() {
         if (radioTarjeta.checked) {
           tarjetaSection.classList.remove('hidden');
+          Array.from(tarjetaSection.querySelectorAll('input, select')).forEach(el=>{el.removeAttribute('disabled');});
           pseSection.classList.add('hidden');
+          Array.from(pseSection.querySelectorAll('input, select')).forEach(el=>{el.setAttribute('disabled','disabled');});
         } else {
           tarjetaSection.classList.add('hidden');
+          Array.from(tarjetaSection.querySelectorAll('input, select')).forEach(el=>{el.setAttribute('disabled','disabled');});
           pseSection.classList.remove('hidden');
+          Array.from(pseSection.querySelectorAll('input, select')).forEach(el=>{el.removeAttribute('disabled');});
         }
       }
 
       radioTarjeta.addEventListener('change', actualizarMetodo);
       radioPse.addEventListener('change', actualizarMetodo);
       actualizarMetodo();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var pagarBtn = document.getElementById('pagar-btn');
+      var formEl = document.getElementById('pago-form');
+      var exitoEl = document.getElementById('exito');
+      pagarBtn.addEventListener('click', function(){
+        if (formEl.reportValidity()) {
+          formEl.classList.add('hidden');
+          exitoEl.classList.remove('hidden');
+        }
+      });
     });
   </script>
 </body>

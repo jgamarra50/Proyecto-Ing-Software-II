@@ -81,7 +81,11 @@
     $infoVehiculo = $vehiculos[$vehiculoSeleccionado] ?? null;
 @endphp
 @php $qs = http_build_query(request()->only(['vehiculo','duracion','precio'])); @endphp
-<form action="#" method="post" novalidate>
+<form action="{{ route('reservas.store') }}" method="post" novalidate>
+@csrf
+<input type="hidden" name="vehiculo" value="{{ request('vehiculo') }}">
+<input type="hidden" name="duracion" value="{{ request('duracion') }}">
+<input type="hidden" name="precio" value="{{ request('precio') }}">
 <div class="p-8 space-y-10">
     @if($infoVehiculo)
     <div class="mb-4">
@@ -101,37 +105,31 @@
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div>
                                             <label for="nombre" class="block text-sm font-medium">Nombre completo</label>
-                                            <input id="nombre" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Juan Perez" />
+                                            <input id="nombre" name="nombre" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Juan Perez" />
                                         </div>
                                         <div>
                                             <label for="email" class="block text-sm font-medium">Correo electronico</label>
-                                            <input id="email" type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="ejemplo@correo.com" />
+                                            <input id="email" name="email" required type="email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="ejemplo@correo.com" />
                                         </div>
                                         <div>
                                             <label for="telefono" class="block text-sm font-medium">Telefono</label>
-                                            <input id="telefono" type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. +57 300 123 4567" />
+                                            <input id="telefono" name="telefono" required type="tel" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. +57 300 123 4567" />
                                         </div>
                                         <div class="grid grid-cols-3 gap-3">
                                             <div class="col-span-1">
                                                 <label for="tipo-doc" class="block text-sm font-medium">
                                                     Tipo de documento
                                                 </label>
-                                                    <select id="tipo-doc" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                                        <option>
-                                                            CC
-                                                        </option>
-                                                        <option>
-                                                            CE
-                                                        </option>
-                                                        <option>
-                                                            Pasaporte
-                                                        </option>
-                                                        </select>
+                                                    <select id="tipo-doc" name="tipo_doc" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                                        <option value="cc">CC</option>
+                                                        <option value="ce">CE</option>
+                                                        <option value="pasaporte">Pasaporte</option>
+                                                    </select>
                                                     </div>
                                                     <div class="col-span-2">
                                                         <label for="num-doc" class="block text-sm font-medium">Numero de documento
                                                         </label>
-                                                        <input id="num-doc" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
+                                                        <input id="num-doc" name="num_doc" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. 123456789" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,60 +142,37 @@
                                                         <label for="fecha" class="block text-sm font-medium">
                                                             Fecha de reserva
                                                         </label>
-                                                        <input id="fecha" type="date" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                                                        <input id="fecha" name="fecha" required type="date" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                                                     </div>
                                                     <div>
                                                         <label for="hora" class="block text-sm font-medium">Hora de inicio
                                                             </label>
-                                                            <input id="hora" type="time" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                                                            <input id="hora" name="hora" required type="time" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                                                         </div>
-                                                        <div>
-                                            <label for="duracion" class="block text-sm font-medium">Duracion estimada
-                                                </label>
-                                                <select id="duracion" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                                    <option {{ $duracionSel==='hora' ? 'selected' : '' }}>1 hora</option>
-                                                    <option {{ $duracionSel==='medio' ? 'selected' : '' }}>Medio día</option>
-                                                    <option {{ $duracionSel==='dia' ? 'selected' : '' }}>Día completo</option>
-                                                </select>
-                                                            </div>
-                                                            <div>
-                                                                <label for="tipo" class="block text-sm font-medium">
-                                                                    Tipo de vehiculo
-                                                                </label>
-                                                                <select id="tipo" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                                                    <option>
-                                                                        Monopatin electrico
-                                                                    </option>
-                                                                    <option>
-                                                                        Bicicleta electrica
-                                                                    </option>
-                                                                    <option>
-                                                                        Patineta electrica
-                                                                    </option>
-                                                                </select>
-                                                                @if($precioSel)
-                                                                <p class="mt-2 text-sm text-emerald-700">Precio seleccionado: ${{ number_format((int)$precioSel, 0, ',', '.') }} COP</p>
-                                                                @endif
-                                                            </div>
+                                                    @if($precioSel)
+                                                    <div>
+                                                        <p class="mt-2 text-sm text-emerald-700">Precio seleccionado: ${{ number_format((int)$precioSel, 0, ',', '.') }} COP</p>
+                                                    </div>
+                                                    @endif
                                                             <div class="sm:col-span-2">
                                                                 <label class="block text-sm font-medium">
                                                                     Accesorios
                                                                 </label>
                                                                 <div class="mt-2 flex flex-wrap gap-4">
                                                                     <label class="inline-flex items-center gap-2">
-                                                                        <input type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+                                                                        <input name="accesorios[]" value="casco" type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                                                                         <span>
                                                                             Casco
                                                                         </span>
                                                                     </label>
                                                                     <label class="inline-flex items-center gap-2">
-                                                                        <input type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+                                                                        <input name="accesorios[]" value="candado" type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                                                                         <span>
                                                                             Candado
                                                                         </span>
                                                                     </label>
                                                                     <label class="inline-flex items-center gap-2">
-                                                                        <input type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+                                                                        <input name="accesorios[]" value="luces" type="checkbox" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                                                                         <span>
                                                                             Luces extra
                                                                         </span>
@@ -208,30 +183,26 @@
                                                                 <label for="recogida" class="block text-sm font-medium">
                                                                     Punto de recogida
                                                                 </label>
-                                                                <input id="recogida" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Parque Santander" />
+                                                                <input id="recogida" name="recogida" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Parque Santander" />
                                                             </div>
                                                             <div>
                                                                 <label for="entrega" class="block text-sm font-medium">Punto de entrega
                                                                 </label>
-                                                                <input id="entrega" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Centro Comercial Cacique" />
+                                                                <input id="entrega" name="entrega" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Centro Comercial Cacique" />
                                                             </div>
                                                             <div>
                                                                 <label for="metodo" class="block text-sm font-medium">Metodo de entrega/recogida
                                                                     </label>
-                                                                    <select id="metodo" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                                                        <option>
-                                                                            En sede
-                                                                        </option>
-                                                                        <option>
-                                                                            Entrega a domicilio
-                                                                        </option>
+                                                                    <select id="metodo" name="metodo" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                                                        <option value="sede">En sede</option>
+                                                                        <option value="domicilio">Entrega a domicilio</option>
                                                                     </select>
                                                                 </div>
                                                                 <div>
                                                                     <label for="direccion" class="block text-sm font-medium">
                                                                         Direccion de entrega (si aplica)
                                                                     </label>
-                                                                        <input id="direccion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Barrio, calle, numero" />
+                                                                        <input id="direccion" name="direccion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Barrio, calle, numero" />
                                                                     </div>
                                                                 </div>
                                                             </section>
@@ -241,15 +212,13 @@
                                                                     <label for="observaciones" class="block text-sm font-medium">
                                                                         Comentarios adicionales
                                                                     </label>
-                                                                    <textarea id="observaciones" rows="4" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Indica requerimientos especiales, restricciones o notas relevantes">
+                                                                    <textarea id="observaciones" name="observaciones" rows="4" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Indica requerimientos especiales, restricciones o notas relevantes">
                                                                         </textarea>
                                                                     </div>
                                                                 </section>
                                                             </div>
                                                             <div class="flex items-center justify-end gap-3 p-6 border-t">
-                        <a href="/elegir-metodo-entrega{{ $qs ? ('?'.$qs) : '' }}" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">
-                            Confirmar Reserva
-                        </a>
+                        <button type="submit" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">Confirmar Reserva</button>
                                                                 <a href="/" class="rounded-lg border border-slate-300 px-5 py-2.5 text-slate-700 hover:bg-slate-50">
                                                                     Cancelar Reserva
                                                                 </a>

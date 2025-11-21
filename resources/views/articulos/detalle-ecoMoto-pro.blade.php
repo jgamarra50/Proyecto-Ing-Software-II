@@ -59,7 +59,11 @@
                 <button type="button" data-duration="dia" class="px-3 py-1 rounded-full bg-gray-100 text-sm">Día completo</button>
             </div>
             <div id="price" class="text-emerald-600 text-xl font-bold mb-4">$28.000 COP</div>
+            @if(auth()->check() && auth()->user()->role === 'cliente')
             <a id="reserveBtn" href="/gestionar-vehiculos" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
+            @else
+            <button type="button" class="inline-block rounded-lg bg-gray-300 px-6 py-3 text-white cursor-not-allowed" disabled>Reservar y pagar</button>
+            @endif
             <div class="mt-6 text-gray-600">Tarifa inicial: $12.000 COP</div>
             <p class="mt-4 text-gray-600">Ideal para usuarios que buscan rendimiento superior sin comprometer la sostenibilidad.</p>
         </div>
@@ -82,7 +86,7 @@
         function updateLink(){
             const btn=document.getElementById('reserveBtn');
             const qs=new URLSearchParams({vehiculo:'ecoMoto-pro',duracion:active,precio:String(rates[active])});
-            btn.href='/gestionar-vehiculos?'+qs.toString();
+            if(btn){btn.href='/gestionar-vehiculos?'+qs.toString();}
         }
         pills.forEach(p=>{p.addEventListener('click',()=>{active=p.dataset.duration;pills.forEach(x=>x.classList.remove('bg-black','text-white'));pills.forEach(x=>x.classList.add('bg-gray-100'));p.classList.remove('bg-gray-100');p.classList.add('bg-black','text-white');update()})});
         update()

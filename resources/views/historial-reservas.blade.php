@@ -30,7 +30,9 @@
                     <div id="userDropdownHist" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
                         <div class="px-4 py-3">
                             <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
-                            @php($roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'])
+                            @php
+                                $roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'];
+                            @endphp
                             <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
                         </div>
                         <div class="border-t">
@@ -48,7 +50,7 @@
         <main>
             <section class="max-w-7xl mx-auto px-6 py-12">
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-emerald-700">Historial de Reservas</h1>
-                <p class="mt-3 text-gray-600">Consulta visual de tus reservas. Esta información es de ejemplo y no es funcional.</p>
+                <p class="mt-3 text-gray-600">Consulta visual de tus reservas.</p>
                 <div class="mt-8 overflow-x-auto rounded-xl bg-white shadow ring-1 ring-black/5">
                     <table class="min-w-full table-auto">
                         <thead class="bg-emerald-50">
@@ -58,51 +60,51 @@
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Método de entrega/recogida</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Nombre del vehículo</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Número de serie</th>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
+                            @php
+                                $vehiculosNombres = [
+                                    'ecoScoot-max' => 'EcoScoot Max',
+                                    'ecoMoto-pro' => 'EcoMoto Pro',
+                                    'ecoScoot-lite' => 'EcoScoot Lite',
+                                    'ecoMoto-standard' => 'EcoMoto Standard',
+                                    'ecoBike-one' => 'EcoBike One',
+                                ];
+                            @endphp
+                            @forelse(($reservas ?? []) as $r)
+                            @php
+                                $ent = ($entregas ?? collect())->get($r->id);
+                                $metodo = $ent
+                                    ? ($ent->domicilio ? 'Entrega a domicilio' : ('Entrega en sede'))
+                                    : ($r->metodo === 'domicilio' ? 'Entrega a domicilio' : 'Entrega en sede');
+                                $vehiculoNombre = $vehiculosNombres[$r->vehiculo] ?? ucfirst($r->tipo ?? 'Vehículo');
+                                $fechaHora = trim(($r->fecha ?? '').' '.($r->hora ?? ''));
+                            @endphp
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-01-12 09:30</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Parque Santander, Bucaramanga</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Entrega en punto de encuentro</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Monopatín Eléctrico X1</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-MONO-000123</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $fechaHora ?: '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $r->recogida ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $metodo }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $vehiculoNombre }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $r->numero_serie ?? '—' }}</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <form action="{{ route('reservas.destroy', $r->id) }}" method="post" onsubmit="return confirm('¿Eliminar esta reserva?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="p-2 rounded hover:bg-red-50" aria-label="Eliminar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                                              <path stroke-linecap="round" stroke-linejoin="round" d="M6 7.5h12M9.75 7.5V6a2.25 2.25 0 0 1 2.25-2.25h0a2.25 2.25 0 0 1 2.25 2.25v1.5m-7.5 0v10.125A2.625 2.625 0 0 0 9.375 20.25h5.25a2.625 2.625 0 0 0 2.625-2.625V7.5" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-01-18 15:45</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Centro Comercial Cañaveral</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Recogida a domicilio</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Bicicleta Eléctrica EcoRide</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-BICI-001987</td>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-4 text-sm text-gray-500">No tienes reservas registradas.</td>
                             </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-02-02 08:00</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Parque de los Niños</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Entrega en estación</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Patineta Eléctrica VoltFlex</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-PATIN-000452</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-02-10 12:20</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Puerta del Sol</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Recogida en punto de encuentro</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Monopatín Eléctrico UrbanLite</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-MONO-000678</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-02-18 17:10</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Cabecera del Llano</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Entrega a domicilio</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Bicicleta Eléctrica GreenMove</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-BICI-002341</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700">2025-03-01 10:05</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Parque San Pío</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Recogida en estación</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">Patineta Eléctrica SwiftRide</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">RV-PATIN-000889</td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
