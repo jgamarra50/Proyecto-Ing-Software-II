@@ -17,7 +17,8 @@
                 <p class="mt-2 text-sm text-slate-600">Regístrate para comenzar a gestionar tus reservas.</p>
             </div>
             <div class="p-8">
-                <form action="#" method="post" novalidate>
+                <form action="{{ route('register.store') }}" method="post" novalidate>
+                    @csrf
                     <div class="space-y-6">
                         <div>
                             <label for="name" class="block text-sm font-medium">Nombre completo</label>
