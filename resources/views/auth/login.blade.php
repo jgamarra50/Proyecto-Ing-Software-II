@@ -29,6 +29,7 @@
                                 class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" 
                                 placeholder="tucorreo@ejemplo.com" 
                                 required 
+                                value="{{ old('email') }}"
                             />
                         </div>
                         <div>
@@ -50,7 +51,7 @@
                         </button>
                         <div class="flex items-center justify-between">
                             <label class="flex items-center gap-2 text-sm text-slate-600">
-                                <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+                                <input name="remember" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
                                 <span>Recordarme</span>
                             </label>
                             <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">¿Olvidaste tu contraseña?</a>

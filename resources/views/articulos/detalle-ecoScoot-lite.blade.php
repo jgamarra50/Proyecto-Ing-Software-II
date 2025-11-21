@@ -30,7 +30,7 @@
                 <button type="button" data-duration="dia" class="px-3 py-1 rounded-full bg-gray-100 text-sm">Día completo</button>
             </div>
             <div id="price" class="text-emerald-600 text-xl font-bold mb-4">$12.000 COP</div>
-            <a href="#" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
+            <a id="reserveBtn" href="/elegir-metodo-entrega" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
             <div class="mt-6 text-gray-600">Tarifa inicial: $7.000 COP</div>
             <p class="mt-4 text-gray-600">Perfecto para trayectos cortos con máxima practicidad y bajo peso.</p>
         </div>
@@ -49,7 +49,12 @@
         const priceEl=document.getElementById('price');
         const pills=document.querySelectorAll('[data-duration]');
         function fmt(n){return new Intl.NumberFormat('es-CO').format(n)+' COP'}
-        function update(){priceEl.textContent='$'+fmt(rates[active])}
+        function update(){priceEl.textContent='$'+fmt(rates[active]);updateLink()}
+        function updateLink(){
+            const btn=document.getElementById('reserveBtn');
+            const qs=new URLSearchParams({producto:'eco-scoot-lite',duracion:active,precio:String(rates[active])});
+            btn.href='/elegir-metodo-entrega?'+qs.toString();
+        }
         pills.forEach(p=>{p.addEventListener('click',()=>{active=p.dataset.duration;pills.forEach(x=>x.classList.remove('bg-black','text-white'));pills.forEach(x=>x.classList.add('bg-gray-100'));p.classList.remove('bg-gray-100');p.classList.add('bg-black','text-white');update()})});
         update()
     </script>

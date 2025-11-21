@@ -15,7 +15,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/articulos', function () {
     return view('articulos');
@@ -58,7 +58,9 @@ Route::get('/realizar-pago', function () {
 
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::get('/register', function () {
     return view('auth.register');

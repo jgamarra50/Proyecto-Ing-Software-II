@@ -17,6 +17,18 @@
                 <p class="mt-2 text-sm text-slate-600">Regístrate para comenzar a gestionar tus reservas.</p>
             </div>
             <div class="p-8">
+                @if(session('success'))
+    <div class="mb-4 rounded-lg bg-green-100 text-green-700 px-4 py-3">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="mb-4 rounded-lg bg-red-100 text-red-700 px-4 py-3">
+        {{ session('error') }}
+    </div>
+@endif
+
                 <form id="registerForm" action="{{ route('register.store') }}" method="post">
                     @csrf
                     <div class="space-y-6">
@@ -108,103 +120,72 @@
     </div>
 
     <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Limpiar errores previos
-            document.querySelectorAll('.text-red-600').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('input').forEach(input => {
-                input.classList.remove('border-red-500');
-            });
-            
-            let isValid = true;
-            
-            // Validar nombre
-            const name = document.getElementById('name');
-            if (name.value.trim() === '') {
-                showError('name', 'nameError', 'El nombre es obligatorio');
-                isValid = false;
-            }
-            
-            // Validar email
-            const email = document.getElementById('email');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value)) {
-                showError('email', 'emailError');
-                isValid = false;
-            }
-            
-            // Validar contraseña
-            const password = document.getElementById('password');
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-            if (!passwordRegex.test(password.value)) {
-                showError('password', 'passwordError');
-                isValid = false;
-            }
-            
-            // Validar confirmación de contraseña
-            const passwordConfirmation = document.getElementById('password_confirmation');
-            if (password.value !== passwordConfirmation.value) {
-                showError('password_confirmation', 'confirmError');
-                isValid = false;
-            }
-            
-            // Validar términos y condiciones
-            const terms = document.getElementById('terms');
-            if (!terms.checked) {
-                showError('terms', 'termsError');
-                isValid = false;
-            }
-            
-            // Si todo es válido, enviar el formulario
-            if (isValid) {
-                // Redirigir al login después de "registrarse"
-                window.location.href = "{{ url('/login') }}";
-            }
-        });
-        
-        function showError(inputId, errorId, customMessage = null) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(errorId);
-            
-            input.classList.add('border-red-500');
-            error.classList.remove('hidden');
-            if (customMessage) {
-                error.textContent = customMessage;
-            }
-        }
-        
-        // Validación en tiempo real para mejorar la experiencia
-        document.getElementById('email').addEventListener('blur', function() {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (this.value && !emailRegex.test(this.value)) {
-                showError('email', 'emailError');
-            } else {
-                this.classList.remove('border-red-500');
-                document.getElementById('emailError').classList.add('hidden');
-            }
-        });
-        
-        document.getElementById('password').addEventListener('blur', function() {
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-            if (this.value && !passwordRegex.test(this.value)) {
-                showError('password', 'passwordError');
-            } else {
-                this.classList.remove('border-red-500');
-                document.getElementById('passwordError').classList.add('hidden');
-            }
-        });
-        
-        document.getElementById('password_confirmation').addEventListener('blur', function() {
-            const password = document.getElementById('password').value;
-            if (this.value && this.value !== password) {
-                showError('password_confirmation', 'confirmError');
-            } else {
-                this.classList.remove('border-red-500');
-                document.getElementById('confirmError').classList.add('hidden');
-            }
-        });
-    </script>
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // detenemos, validamos y luego enviamos manualmente
+
+    // Limpiar errores previos
+    document.querySelectorAll('.text-red-600').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('input').forEach(input => {
+        input.classList.remove('border-red-500');
+    });
+
+    let isValid = true;
+
+    // Validar nombre
+    const name = document.getElementById('name');
+    if (name.value.trim() === '') {
+        showError('name', 'nameError', 'El nombre es obligatorio');
+        isValid = false;
+    }
+
+    // Validar email
+    const email = document.getElementById('email');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+        showError('email', 'emailError');
+        isValid = false;
+    }
+
+    // Validar contraseña
+    const password = document.getElementById('password');
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password.value)) {
+        showError('password', 'passwordError');
+        isValid = false;
+    }
+
+    // Confirmación
+    const passwordConfirmation = document.getElementById('password_confirmation');
+    if (password.value !== passwordConfirmation.value) {
+        showError('password_confirmation', 'confirmError');
+        isValid = false;
+    }
+
+    // Validar términos
+    const terms = document.getElementById('terms');
+    if (!terms.checked) {
+        showError('terms', 'termsError');
+        isValid = false;
+    }
+
+    // ✔ SI TODO ES VÁLIDO, AHORA SÍ ENVIAMOS EL FORMULARIO AL CONTROLADOR
+    if (isValid) {
+        document.getElementById('registerForm').submit();
+    }
+});
+
+function showError(inputId, errorId, customMessage = null) {
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
+
+    input.classList.add('border-red-500');
+    error.classList.remove('hidden');
+    if (customMessage) {
+        error.textContent = customMessage;
+    }
+}
+</script>
+
 
     @livewireScripts
 </body>
