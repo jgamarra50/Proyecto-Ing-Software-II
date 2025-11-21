@@ -58,6 +58,7 @@
                     <a href="#" class="hover:text-black transition">Scooters</a>
                     <a href="#" class="hover:text-black transition">Bicicletas</a>
                     <a href="#" class="hover:text-black transition">Accesorios</a>
+                    <a href="#contacto" class="hover:text-black transition">Contacto</a>
                 </nav>
                 
                 <div class="h-6 w-px bg-gray-200 hidden lg:block"></div>
@@ -281,6 +282,86 @@
             </div>
         </section>
 
+        <section id="contacto" class="py-16 bg-white">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-gray-900">Contacto</h2>
+                        <p class="text-gray-500">¿Tienes dudas, sugerencias o quieres hablar con nosotros? Escríbenos.</p>
+                        <div class="rounded-2xl border border-gray-100 p-6 bg-[#F9FAFB] space-y-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a2 2 0 011.789 1.106l1.2 2.4A2 2 0 0013.28 8H19a2 2 0 012 2v1a2 2 0 01-2 2h-4.28a2 2 0 00-1.821 1.137l-1.2 2.4A2 2 0 009.28 17H5a2 2 0 01-2-2V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Línea de atención</div>
+                                    <div class="text-gray-500 text-sm">+57 300 123 4567</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7m0-7a7 7 0 017-7m-7 7a7 7 0 00-7-7"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Correo</div>
+                                    <div class="text-gray-500 text-sm">soporte@ecoflow.com</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12l4.243-4.243M6.343 7.343L10.586 12 6.343 16.243"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Dirección</div>
+                                    <div class="text-gray-500 text-sm">Carrera 27 # 36-14, Bucaramanga</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <form id="form-contacto" action="#" method="post" class="space-y-5">
+                            <div>
+                                <label for="nombre" class="block text-sm font-medium">Nombre</label>
+                                <input id="nombre" type="text" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200" placeholder="Tu nombre">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="correo" class="block text-sm font-medium">Correo</label>
+                                    <input id="correo" type="email" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200" placeholder="tucorreo@ejemplo.com">
+                                </div>
+                                <div>
+                                    <label for="telefono" class="block text-sm font-medium">Teléfono</label>
+                                    <input id="telefono" type="tel" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200" placeholder="300 000 0000">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="motivo" class="block text-sm font-medium">Motivo</label>
+                                <select id="motivo" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <option>Consulta general</option>
+                                    <option>Soporte</option>
+                                    <option>Reservas</option>
+                                    <option>Propuesta comercial</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="mensaje" class="block text-sm font-medium">Mensaje</label>
+                                <textarea id="mensaje" rows="5" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200" placeholder="Cuéntanos en qué podemos ayudarte"></textarea>
+                            </div>
+                            <button type="button" class="w-full rounded-lg bg-black px-5 py-3 text-white hover:bg-gray-800 transition">Enviar</button>
+                            <div id="contacto-alerta" class="hidden text-sm text-emerald-600 font-semibold">Este formulario es de demostración.</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FOOTER -->
         <footer class="bg-[#1c1c1c] text-white pt-16 pb-8">
             <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
@@ -349,6 +430,18 @@
             ];
             markers.forEach(m => new google.maps.Marker({position: m.position, map: map, title: m.title}));
         };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var btn = document.querySelector('#form-contacto button[type="button"]');
+            var alerta = document.getElementById('contacto-alerta');
+            if (btn && alerta) {
+                btn.addEventListener('click', function() {
+                    alerta.classList.remove('hidden');
+                    setTimeout(function() { alerta.classList.add('hidden'); }, 3000);
+                });
+            }
+        });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
