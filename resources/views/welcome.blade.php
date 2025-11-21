@@ -47,9 +47,9 @@
                             <svg class="h-8 w-8 text-emerald-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M4 16h12l2-2-2-2H6l-2 2v2zm1 3a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm14 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
                             </svg>
-                            <h3 class="text-xl font-semibold">Patinetas</h3>
+                            <h3 class="text-xl font-semibold">front end del operador de estacion</h3>
                         </div>
-                        <p class="mt-3 text-gray-600">Diversión eléctrica para moverte con estilo.</p>
+                        <a href="/reportar-incidencias" class="mt-3 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700">reportar incidencias de vehículo</a>
                     </div>
                 </div>
             </section>
