@@ -171,7 +171,7 @@
                 <!-- Sede Principal -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8 group cursor-pointer hover:shadow-lg transition duration-300">
                     <div class="relative h-[400px] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=1400&auto=format&fit=crop" alt="Cabecera" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        <img src="{{ asset('imagenes/cabecera.jpeg') }}" alt="Cabecera" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
                         <div class="absolute top-4 left-4 bg-black text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">Principal</div>
                     </div>
                     <div class="p-8">
@@ -186,7 +186,7 @@
                     <!-- Floridablanca -->
                     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 product-card cursor-pointer hover:shadow-md transition">
                         <div class="rounded-lg overflow-hidden h-56 mb-4 relative bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1400&auto=format&fit=crop" alt="Floridablanca" class="w-full h-full object-cover">
+                            <img src="{{ asset('imagenes/floridablanca.jpeg') }}" alt="Floridablanca" class="w-full h-full object-cover">
                             <div class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded">NUEVA</div>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900">Floridablanca</h3>
@@ -200,7 +200,7 @@
                     <!-- Piedecuesta -->
                     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 product-card cursor-pointer hover:shadow-md transition">
                         <div class="rounded-lg overflow-hidden h-56 mb-4 relative bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1571624436279-b272aff752b5?q=80&w=1400&auto=format&fit=crop" alt="Piedecuesta" class="w-full h-full object-cover">
+                            <img src="{{ asset('imagenes/piedecuesta.jpeg') }}" alt="Piedecuesta" class="w-full h-full object-cover">
                         </div>
                         <h3 class="text-lg font-bold text-gray-900">Piedecuesta</h3>
                         <p class="text-xs text-gray-500 mt-1 mb-3 line-clamp-2">Reconocida por su facilidad de acceso y cercanía a zonas residenciales y aeropuerto.</p>
@@ -213,7 +213,7 @@
                     <!-- Cañaveral -->
                     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 product-card cursor-pointer hover:shadow-md transition">
                         <div class="rounded-lg overflow-hidden h-56 mb-4 relative bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?q=80&w=1400&auto=format&fit=crop" alt="Cañaveral" class="w-full h-full object-cover">
+                            <img src="{{ asset('imagenes/cañaveral.jpeg') }}" alt="Cañaveral" class="w-full h-full object-cover">
                             <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">ALTA DEMANDA</div>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900">Cañaveral</h3>
