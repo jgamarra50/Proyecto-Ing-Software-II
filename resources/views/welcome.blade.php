@@ -76,9 +76,23 @@
                     </a>
                     @endguest
                     @auth
-                    <div class="flex flex-col items-center">
-                        <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
-                        <div class="text-xs text-gray-700 mt-1">EcoUser</div>
+                    <div class="relative">
+                        <button id="userMenuButton" type="button" class="flex items-center gap-2 rounded-full bg-white px-2 py-1 hover:bg-gray-50">
+                            <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
+                            <span class="text-sm text-gray-700">{{ auth()->user()->name }}</span>
+                        </button>
+                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
+                            <div class="px-4 py-3">
+                                <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                            </div>
+                            <div class="border-t">
+                                <a href="/mis-reservas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Ver mis reservas</a>
+                                <form action="{{ route('logout') }}" method="post" class="px-4 py-2">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left text-sm text-red-600 hover:bg-red-50 rounded">Cerrar sesión</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     @endauth
                 </div>
@@ -447,6 +461,21 @@
             ];
             markers.forEach(m => new google.maps.Marker({position: m.position, map: map, title: m.title}));
         };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('userMenuButton');
+            const dd = document.getElementById('userDropdown');
+            if (btn && dd) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dd.classList.toggle('hidden');
+                });
+                document.addEventListener('click', function() {
+                    dd.classList.add('hidden');
+                });
+            }
+        });
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

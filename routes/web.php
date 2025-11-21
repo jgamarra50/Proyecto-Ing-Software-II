@@ -43,28 +43,8 @@ Route::get('/imagenes/{filename}', function (string $filename) {
     ]);
 });
 
-<<<<<<< HEAD
-// Ruta para gestionar vehículos con parámetro
-Route::get('/gestionar-vehiculos', function () {
-    return view('gestionar-vehiculos');
-})->name('gestionar-vehiculos');
-
 Route::get('/realizar-pago', function () {
     return view('realizar-pago');
-});
-=======
-Route::get('/realizar-pago', function () {
-    return view('realizar-pago');
-});
-
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-Route::get('/register', function () {
-    return view('auth.register');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -74,7 +54,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/gestionar-vehiculos', function () {
         return view('gestionar-vehiculos');
-    });
+    })->name('gestionar-vehiculos');
 
     Route::get('/registrar-mantenimiento-completo', function () {
         return view('registrar-mantenimiento-completo');
@@ -89,7 +69,6 @@ Route::middleware(['auth', 'role:repartidor'])->group(function () {
     Route::get('/elegir-metodo-entrega', function () {
         return view('elegir-metodo-entrega');
     });
->>>>>>> 834c87bb476fdc25a55567420878613c4e62b2e0
 
     Route::get('/registrar-entrega-vehiculo', function () {
         return view('registrar-entrega-de-vehiculo');
@@ -100,12 +79,9 @@ Route::middleware(['auth', 'role:repartidor'])->group(function () {
     });
 });
 
-Route::get('/historial-reservas', function () {
-    return view('historial-reservas');
-});
-
-// Rutas de autenticación
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
@@ -113,3 +89,9 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mis-reservas', function () {
+        return view('historial-reservas');
+    })->name('mis-reservas');
+});
