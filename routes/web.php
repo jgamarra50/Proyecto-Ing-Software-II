@@ -65,18 +65,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'role:repartidor'])->group(function () {
-    Route::get('/elegir-metodo-entrega', function () {
-        return view('elegir-metodo-entrega');
-    });
+Route::get('/elegir-metodo-entrega', function () {
+    return view('elegir-metodo-entrega');
+});
 
-    Route::get('/registrar-entrega-vehiculo', function () {
-        return view('registrar-entrega-de-vehiculo');
-    });
+Route::get('/registrar-entrega-vehiculo', function () {
+    return view('registrar-entrega-de-vehiculo');
+});
 
-    Route::get('/estado-vehiculo', function () {
-        return view('estado-vehiculo');
-    });
+Route::get('/estado-vehiculo', function () {
+    return view('estado-vehiculo');
 });
 
 Route::get('/login', function () {

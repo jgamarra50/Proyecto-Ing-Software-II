@@ -20,10 +20,6 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Administrador', 'role' => 'admin', 'password' => bcrypt('admin1234')]
         );
 
-        User::updateOrCreate(
-            ['email' => 'repartidor@ecoflow.local'],
-            ['name' => 'Repartidor', 'role' => 'repartidor', 'password' => bcrypt('repartidor1234')]
-        );
 
         User::updateOrCreate(
             ['email' => 'cliente@ecoflow.local'],

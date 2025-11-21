@@ -27,22 +27,6 @@ class RegisterRoleTest extends TestCase
         ]);
     }
 
-    public function test_register_as_repartidor_assigns_repartidor_role(): void
-    {
-        $response = $this->post('/register', [
-            'name' => 'Nuevo Repartidor',
-            'email' => 'nuevorepartidor@example.com',
-            'password' => 'Password1',
-            'password_confirmation' => 'Password1',
-            'role' => 'repartidor',
-        ]);
-
-        $response->assertRedirect('/login');
-        $this->assertDatabaseHas('users', [
-            'email' => 'nuevorepartidor@example.com',
-            'role' => 'repartidor',
-        ]);
-    }
 
     public function test_register_as_cliente_assigns_cliente_role(): void
     {

@@ -42,8 +42,12 @@
                                 class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" 
                                 placeholder="Tu nombre" 
                                 required 
+                                value="{{ old('name') }}"
                             />
                             <p id="nameError" class="mt-1 text-sm text-red-600 hidden"></p>
+                            @error('name')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Correo electrónico -->
@@ -56,19 +60,25 @@
                                 class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" 
                                 placeholder="tucorreo@ejemplo.com" 
                                 required 
+                                value="{{ old('email') }}"
                             />
                             <p id="emailError" class="mt-1 text-sm text-red-600 hidden">Debe ingresar un correo electrónico válido</p>
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Rol -->
                         <div>
                             <label for="role" class="block text-sm font-medium">Rol</label>
                             <select id="role" name="role" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" required>
-                                <option value="cliente">Cliente</option>
-                                <option value="repartidor">Repartidor</option>
-                                <option value="admin">Administrador</option>
+                                <option value="cliente" {{ old('role')==='cliente' ? 'selected' : '' }}>Cliente</option>
+                                <option value="admin" {{ old('role')==='admin' ? 'selected' : '' }}>Administrador</option>
                             </select>
                             <p id="roleError" class="mt-1 text-sm text-red-600 hidden">Debe seleccionar un rol</p>
+                            @error('role')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Contraseña -->
@@ -83,6 +93,9 @@
                                 required 
                             />
                             <p id="passwordError" class="mt-1 text-sm text-red-600 hidden">La contraseña debe tener mínimo 8 caracteres, al menos una letra mayúscula y un número</p>
+                            @error('password')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Confirmar contraseña -->

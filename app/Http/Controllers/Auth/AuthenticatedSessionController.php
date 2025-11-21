@@ -34,16 +34,6 @@ class AuthenticatedSessionController extends Controller
         // Regenerar sesión
         $request->session()->regenerate();
 
-        $user = $request->user();
-        if ($user && $user->role === 'admin') {
-            return redirect('/gestionar-vehiculos');
-        }
-        if ($user && $user->role === 'repartidor') {
-            return redirect('/registrar-entrega-vehiculo');
-        }
-        if ($user && $user->role === 'cliente') {
-            return redirect('/articulos');
-        }
         return redirect()->route('welcome');
     }
 

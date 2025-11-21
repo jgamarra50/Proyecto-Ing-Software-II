@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email',
                 'password' => ['required', 'confirmed', Password::default()],
-                'role' => 'required|in:cliente,repartidor,admin',
+                'role' => 'required|in:cliente,admin',
             ]);
 
             Log::info("Validación correcta", $validated);

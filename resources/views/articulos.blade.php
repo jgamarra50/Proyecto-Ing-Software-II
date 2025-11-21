@@ -40,39 +40,43 @@
                 <span class="font-bold text-2xl tracking-tight">EcoFlow</span>
             </div>
 
-            <!-- BARRA DE BÚSQUEDA -->
-            <div class="hidden md:flex flex-1 max-w-xl mx-8">
-                <div class="relative w-full">
-                    <input type="text" placeholder="Buscar vehículos, modelos o características..." class="w-full bg-gray-100 text-gray-700 text-sm rounded-full pl-5 pr-12 py-2.5 focus:outline-none focus:ring-1 focus:ring-black transition border border-transparent focus:bg-white">
-                    <button class="absolute right-1 top-1/2 -translate-y-1/2 bg-black text-white p-1.5 rounded-full hover:bg-gray-800 transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            
 
             <!-- ICONOS Y MENÚ -->
             <div class="flex items-center gap-6 text-sm font-medium">
                 <nav class="hidden lg:flex items-center gap-6 text-gray-600">
                     <a href="/" class="hover:text-black transition">Inicio</a>
                     <span class="text-black font-semibold">Artículos</span>
-                    <a href="#" class="hover:text-black transition">Scooters</a>
-                    <a href="#" class="hover:text-black transition">Bicicletas</a>
                 </nav>
                 
-                <div class="h-6 w-px bg-gray-200 hidden lg:block"></div>
-
                 <div class="flex items-center gap-4">
-                    <a href="/login" class="flex items-center gap-2 text-gray-700 hover:text-black transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                        <span class="hidden xl:inline">Ingresar</span>
-                    </a>
-                    <a href="/register" class="hidden sm:flex bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-lg shadow-black/20">
-                        Registrarse
-                    </a>
+                    @guest
+                        <a href="/register" class="hidden sm:flex bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-lg shadow-black/20">
+                            Registrarse
+                        </a>
+                    @endguest
+                    @auth
+                    <div class="relative">
+                        <button id="userMenuButtonArticulos" type="button" class="flex items-center gap-2 rounded-full bg-white px-2 py-1 hover:bg-gray-50">
+                            <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
+                            <span class="text-sm text-gray-700">{{ auth()->user()->name }}</span>
+                        </button>
+                        <div id="userDropdownArticulos" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
+                            <div class="px-4 py-3">
+                                <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                                @php($roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'])
+                                <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
+                            </div>
+                            <div class="border-t">
+                                <a href="/mis-reservas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Ver mis reservas</a>
+                                <form action="{{ route('logout') }}" method="post" class="px-4 py-2">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left text-sm text-red-600 hover:bg-red-50 rounded">Cerrar sesión</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -92,14 +96,9 @@
                         Descubre nuestra flota de motos y scooters eléctricos para movilidad urbana.
                     </p>
                     
-                    <!-- Botones -->
+                    <!-- Botón principal -->
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="#" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">
-                            Ver disponibilidad
-                        </a>
-                        <a href="#" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">
-                            Comparar modelos
-                        </a>
+                        <a href="/articulos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ver Artículos</a>
                     </div>
                 </div>
                 
@@ -108,7 +107,7 @@
                     <img src="{{ asset('imagenes/EcoFlow.png') }}" alt="Vehículos EcoFlow" class="mx-auto max-w-4xl w-full object-contain drop-shadow-xl">
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- SECCIÓN PRINCIPAL DE ARTÍCULOS -->
         <section class="py-16 bg-[#F9FAFB]">
@@ -369,5 +368,20 @@
             </div>
         </footer>
     </main>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('userMenuButtonArticulos');
+            const dd = document.getElementById('userDropdownArticulos');
+            if (btn && dd) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dd.classList.toggle('hidden');
+                });
+                document.addEventListener('click', function() {
+                    dd.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+    </body>
 </html>

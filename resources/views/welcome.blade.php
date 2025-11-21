@@ -40,28 +40,11 @@
                 <span class="font-bold text-2xl tracking-tight">EcoFlow</span>
             </div>
 
-            <!-- BARRA DE BÚSQUEDA -->
-            <div class="hidden md:flex flex-1 max-w-xl mx-8">
-                <div class="relative w-full">
-                    <input type="text" placeholder="Buscar repuestos, sedes o vehículos..." class="w-full bg-gray-100 text-gray-700 text-sm rounded-full pl-5 pr-12 py-2.5 focus:outline-none focus:ring-1 focus:ring-black transition border border-transparent focus:bg-white">
-                    <button class="absolute right-1 top-1/2 -translate-y-1/2 bg-black text-white p-1.5 rounded-full hover:bg-gray-800 transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            
 
             <!-- ICONOS Y MENÚ -->
             <div class="flex items-center gap-6 text-sm font-medium">
-                <nav class="hidden lg:flex items-center gap-6 text-gray-600">
-                    <a href="#" class="hover:text-black transition">Scooters</a>
-                    <a href="#" class="hover:text-black transition">Bicicletas</a>
-                    <a href="#" class="hover:text-black transition">Accesorios</a>
-                    <a href="#contacto" class="hover:text-black transition">Contacto</a>
-                </nav>
                 
-                <div class="h-6 w-px bg-gray-200 hidden lg:block"></div>
 
                 <div class="flex items-center gap-4">
                     @guest
@@ -84,6 +67,8 @@
                         <div id="userDropdown" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
                             <div class="px-4 py-3">
                                 <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                                @php($roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'])
+                                <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
                             </div>
                             <div class="border-t">
                                 <a href="/mis-reservas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Ver mis reservas</a>
@@ -114,21 +99,7 @@
                     </p>
                     
                     <div class="flex flex-wrap justify-center gap-4">
-                        @auth
-                            @if(auth()->user()->role === 'admin')
-                                <a href="/gestionar-vehiculos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Gestionar Vehículos</a>
-                                <a href="/historial-reservas" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Ver Historial</a>
-                            @elseif(auth()->user()->role === 'repartidor')
-                                <a href="/registrar-entrega-vehiculo" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Registrar Entrega</a>
-                                <a href="/estado-vehiculo" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Estado del Vehículo</a>
-                            @else
-                                <a href="/articulos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ver Artículos</a>
-                                <a href="/realizar-pago" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Realizar Pago</a>
-                            @endif
-                        @else
-                            <a href="/login" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ingresar</a>
-                            <a href="/articulos" class="px-8 py-3.5 bg-white text-black border border-gray-200 font-semibold rounded-lg hover:border-black transition">Ver Artículos</a>
-                        @endauth
+                        <a href="/articulos" class="px-8 py-3.5 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition transform hover:-translate-y-0.5 shadow-md">Ver Artículos</a>
                     </div>
                 </div>
                 

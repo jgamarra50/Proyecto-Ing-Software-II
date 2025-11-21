@@ -16,19 +16,7 @@ class RoleAccessTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_repartidor_cannot_access_admin_routes(): void
-    {
-        $user = User::factory()->create(['role' => 'repartidor']);
-        $response = $this->actingAs($user)->get('/gestionar-vehiculos');
-        $response->assertRedirect('/login');
-    }
-
-    public function test_repartidor_can_access_repartidor_routes(): void
-    {
-        $user = User::factory()->create(['role' => 'repartidor']);
-        $response = $this->actingAs($user)->get('/registrar-entrega-vehiculo');
-        $response->assertStatus(200);
-    }
+    // Removed repartidor role tests per requirement: only 'cliente' and 'admin' remain.
 
     public function test_guest_redirected_from_protected_routes(): void
     {
