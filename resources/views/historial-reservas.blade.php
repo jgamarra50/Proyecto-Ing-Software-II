@@ -8,12 +8,42 @@
     </head>
     <body class="bg-gray-50 text-gray-900">
         <header class="max-w-7xl mx-auto flex items-center justify-between p-6">
-            <div class="font-bold text-xl text-emerald-600">Renta Verde</div>
-            <nav class="space-x-4">
-                <a href="/" class="text-gray-700 hover:text-emerald-600">Inicio</a>
-                <a href="/login" class="text-gray-700 hover:text-emerald-600">Ingresar</a>
-                <a href="/register" class="text-gray-700 hover:text-emerald-600">Registrarse</a>
-            </nav>
+            <div class="font-bold text-xl text-emerald-600">EcoFlow</div>
+            <div class="flex items-center gap-4">
+                @guest
+                    <a href="/login" class="flex items-center gap-2 text-gray-700 hover:text-black transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span class="hidden xl:inline">Ingresar</span>
+                    </a>
+                    <a href="/register" class="hidden sm:flex bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-lg shadow-black/20">
+                        Registrarse
+                    </a>
+                @endguest
+                @auth
+                <div class="relative">
+                    <button id="userMenuButtonHist" type="button" class="flex items-center gap-2 rounded-full bg-white px-2 py-1 hover:bg-gray-50">
+                        <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
+                        <span class="text-sm text-gray-700">{{ auth()->user()->name }}</span>
+                    </button>
+                    <div id="userDropdownHist" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
+                        <div class="px-4 py-3">
+                            <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                            @php($roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'])
+                            <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
+                        </div>
+                        <div class="border-t">
+                            <a href="/mis-reservas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Ver mis reservas</a>
+                            <form action="{{ route('logout') }}" method="post" class="px-4 py-2">
+                                @csrf
+                                <button type="submit" class="w-full text-left text-sm text-red-600 hover:bg-red-50 rounded">Cerrar sesión</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endauth
+            </div>
         </header>
         <main>
             <section class="max-w-7xl mx-auto px-6 py-12">
@@ -81,6 +111,21 @@
                 </div>
             </section>
         </main>
-        <footer class="max-w-7xl mx-auto px-6 py-8 text-center text-sm text-gray-500">© 2025 Renta Verde Bucaramanga</footer>
+        <footer class="max-w-7xl mx-auto px-6 py-8 text-center text-sm text-gray-500">© 2025 EcoFlow</footer>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('userMenuButtonHist');
+                const dd = document.getElementById('userDropdownHist');
+                if (btn && dd) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dd.classList.toggle('hidden');
+                    });
+                    document.addEventListener('click', function() {
+                        dd.classList.add('hidden');
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

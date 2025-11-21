@@ -88,6 +88,9 @@ Route::middleware(['auth'])->group(function () {
         return view('historial-reservas');
     })->name('mis-reservas');
 
+    Route::get('/gestionar-vehiculos', fn () => view('gestionar-vehiculos'))
+            ->name('gestionar-vehiculos');
+
 });
 
 /*
@@ -99,8 +102,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/historial-reservas', fn () => view('historial-reservas'));
 
-    Route::get('/gestionar-vehiculos', fn () => view('gestionar-vehiculos'))
-            ->name('gestionar-vehiculos');
 
     Route::get('/registrar-mantenimiento-completo', fn () => view('registrar-mantenimiento-completo'));
 

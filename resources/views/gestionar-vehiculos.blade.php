@@ -11,6 +11,30 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])@livewireStyles
     </head>
     <body class="min-h-screen bg-gradient-to-br from-sky-50 to-indigo-100 text-slate-800">
+        <header class="max-w-7xl mx-auto flex items-center justify-between p-6">
+            <div class="font-bold text-xl text-emerald-600">EcoFlow</div>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <button id="userMenuButtonGestion" type="button" class="flex items-center gap-2 rounded-full bg-white px-2 py-1 hover:bg-gray-50">
+                        <img src="{{ asset('img/celebracion.png') }}" class="h-10 w-10 rounded-full object-cover" alt="perfil">
+                        <span class="text-sm text-gray-700">{{ auth()->user()->name }}</span>
+                    </button>
+                    <div id="userDropdownGestion" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
+                        <div class="px-4 py-3">
+                            <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                            <div class="mt-1 text-xs text-gray-500">{{ auth()->user()->role === 'admin' ? 'Administrador' : 'Cliente' }}</div>
+                        </div>
+                        <div class="border-t">
+                            <a href="/mis-reservas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Ver mis reservas</a>
+                            <form action="{{ route('logout') }}" method="post" class="px-4 py-2">
+                                @csrf
+                                <button type="submit" class="w-full text-left text-sm text-red-600 hover:bg-red-50 rounded">Cerrar sesión</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
         <main class="max-w-3xl mx-auto my-10 px-4">
             <div class="w-full rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">
                 <div class="h-2 bg-emerald-600">
@@ -56,6 +80,7 @@
     $vehiculoSeleccionado = request()->get('vehiculo');
     $infoVehiculo = $vehiculos[$vehiculoSeleccionado] ?? null;
 @endphp
+@php $qs = http_build_query(request()->only(['vehiculo','duracion','precio'])); @endphp
 <form action="#" method="post" novalidate>
 <div class="p-8 space-y-10">
     @if($infoVehiculo)
@@ -66,6 +91,10 @@
         <p class="text-gray-600">Tarifa inicial: {{ $infoVehiculo['tarifa_inicial'] }}</p>
     </div>
     @endif
+    @php
+        $duracionSel = request('duracion');
+        $precioSel = request('precio');
+    @endphp
                             <div class="p-8 space-y-10">
                                 <section class="space-y-6">
                                     <h2 class="text-lg font-medium">Datos personales</h2>
@@ -123,25 +152,13 @@
                                                             <input id="hora" type="time" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                                                         </div>
                                                         <div>
-                                                            <label for="duracion" class="block text-sm font-medium">Duracion estimada
-                                                                </label>
-                                                                <select id="duracion" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                                                    <option>
-                                                                        1 hora
-                                                                    </option>
-                                                                    <option>
-                                                                        2 horas
-                                                                    </option>
-                                                                    <option>
-                                                                        4 horas
-                                                                    </option>
-                                                                    <option>
-                                                                        8 horas
-                                                                    </option>
-                                                                    <option>
-                                                                        24 horas
-                                                                    </option>
-                                                                </select>
+                                            <label for="duracion" class="block text-sm font-medium">Duracion estimada
+                                                </label>
+                                                <select id="duracion" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                                    <option {{ $duracionSel==='hora' ? 'selected' : '' }}>1 hora</option>
+                                                    <option {{ $duracionSel==='medio' ? 'selected' : '' }}>Medio día</option>
+                                                    <option {{ $duracionSel==='dia' ? 'selected' : '' }}>Día completo</option>
+                                                </select>
                                                             </div>
                                                             <div>
                                                                 <label for="tipo" class="block text-sm font-medium">
@@ -158,6 +175,9 @@
                                                                         Patineta electrica
                                                                     </option>
                                                                 </select>
+                                                                @if($precioSel)
+                                                                <p class="mt-2 text-sm text-emerald-700">Precio seleccionado: ${{ number_format((int)$precioSel, 0, ',', '.') }} COP</p>
+                                                                @endif
                                                             </div>
                                                             <div class="sm:col-span-2">
                                                                 <label class="block text-sm font-medium">
@@ -227,9 +247,9 @@
                                                                 </section>
                                                             </div>
                                                             <div class="flex items-center justify-end gap-3 p-6 border-t">
-                                                                <a href="/elegir-metodo-entrega" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">
-                                                                    Confirmar Reserva
-                                                                </a>
+                        <a href="/elegir-metodo-entrega{{ $qs ? ('?'.$qs) : '' }}" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700">
+                            Confirmar Reserva
+                        </a>
                                                                 <a href="/" class="rounded-lg border border-slate-300 px-5 py-2.5 text-slate-700 hover:bg-slate-50">
                                                                     Cancelar Reserva
                                                                 </a>
@@ -237,6 +257,21 @@
                                                         </form>
                                                     </div>
                                                 </main>
-                                                @livewireScripts
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('userMenuButtonGestion');
+                const dd = document.getElementById('userDropdownGestion');
+                if (btn && dd) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dd.classList.toggle('hidden');
+                    });
+                    document.addEventListener('click', function() {
+                        dd.classList.add('hidden');
+                    });
+                }
+            });
+        </script>
+        @livewireScripts
                                                             </body>
                                                                 </html>
