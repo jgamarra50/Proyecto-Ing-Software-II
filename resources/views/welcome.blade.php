@@ -11,8 +11,10 @@
     <body class="bg-gray-50 text-gray-900">
         <header class="max-w-7xl mx-auto flex items-center justify-between p-6">
             <div class="font-bold text-xl text-emerald-600">Renta Verde</div>
-            <nav class="space-x-4"><a href="/login" class="text-gray-700 hover:text-emerald-600">
-                Ingresar</a><a href="/register" class="text-gray-700 hover:text-emerald-600">Registrarse</a>
+            <nav class="space-x-4">
+                <a href="/articulos" class="text-gray-700 hover:text-emerald-600">Artículos</a>
+                <a href="/login" class="text-gray-700 hover:text-emerald-600">Ingresar</a>
+                <a href="/register" class="text-gray-700 hover:text-emerald-600">Registrarse</a>
             </nav>
         </header>
         <main>

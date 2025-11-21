@@ -8,6 +8,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/articulos', function () {
+    return view('articulos');
+});
+
+Route::get('/imagenes/{filename}', function (string $filename) {
+    $safe = basename($filename);
+    $path = base_path('imagenes/'.$safe);
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    return response()->file($path, [
+        'Content-Type' => mime_content_type($path),
+    ]);
+});
+
 Route::get('/realizar-pago', function () {
     return view('realizar-pago');
 });
