@@ -45,3 +45,7 @@ Route::get('/estado-vehiculo', function () {
 Route::get('/registrar-mantenimiento-completo', function () {
     return view('registrar-mantenimiento-completo');
 });
+
+Route::get('/reportar-incidencias', function () {
+    return view('reportar-incidencias');
+});
