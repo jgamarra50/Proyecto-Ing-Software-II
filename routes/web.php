@@ -6,6 +6,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/articulos', function () {
+    return view('articulos');
+});
+
 Route::get('/realizar-pago', function () {
     return view('realizar-pago');
 });
