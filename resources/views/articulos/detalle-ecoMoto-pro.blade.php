@@ -59,7 +59,7 @@
                 <button type="button" data-duration="dia" class="px-3 py-1 rounded-full bg-gray-100 text-sm">Día completo</button>
             </div>
             <div id="price" class="text-emerald-600 text-xl font-bold mb-4">$28.000 COP</div>
-            @if(auth()->check() && auth()->user()->role === 'cliente')
+            @if(auth()->check() && auth()->user()->hasRole('user'))
             <a id="reserveBtn" href="/gestionar-vehiculos" class="inline-block rounded-lg bg-black px-6 py-3 text-white">Reservar y pagar</a>
             @else
             <button type="button" class="inline-block rounded-lg bg-gray-300 px-6 py-3 text-white cursor-not-allowed" disabled>Reservar y pagar</button>

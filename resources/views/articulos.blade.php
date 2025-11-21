@@ -64,7 +64,7 @@
                         <div id="userDropdownArticulos" class="absolute right-0 mt-2 w-48 rounded-lg border border-gray-100 bg-white shadow-lg hidden">
                             <div class="px-4 py-3">
                                 <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
-                                @php($roleMap = ['cliente'=>'Cliente','admin'=>'Administrador'])
+                                @php($roleMap = ['user'=>'Cliente','admin'=>'Administrador'])
                                 <div class="mt-1 text-xs text-gray-500">{{ $roleMap[auth()->user()->role] ?? auth()->user()->role }}</div>
                             </div>
                             <div class="border-t">

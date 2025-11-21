@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -21,17 +22,23 @@ class RegisteredUserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email',
                 'password' => ['required', 'confirmed', Password::default()],
-                'role' => 'required|in:cliente,admin',
             ]);
 
             Log::info("Validación correcta", $validated);
+
+            $role = Role::firstOrCreate([
+                'name' => 'user',
+                'guard_name' => 'web',
+            ]);
 
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
-                'role' => $validated['role'],
+                'role' => 'user',
             ]);
+
+            $user->assignRole($role);
 
             Log::info("Usuario registrado exitosamente", [
                 'id' => $user->id,

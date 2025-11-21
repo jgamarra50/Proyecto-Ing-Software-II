@@ -107,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
             ->name('realizar-pago');
 
     Route::post('/reservas', function (Request $request) {
-        if (!Auth::check() || Auth::user()->role !== 'cliente') {
+        if (!Auth::check() || !Auth::user()->hasRole('user')) {
             abort(403);
         }
 

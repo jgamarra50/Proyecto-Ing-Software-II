@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,15 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@ecoflow.local'],
-            ['name' => 'Administrador', 'role' => 'admin', 'password' => bcrypt('admin1234')]
-        );
-
-
-        User::updateOrCreate(
-            ['email' => 'cliente@ecoflow.local'],
-            ['name' => 'Cliente', 'role' => 'cliente', 'password' => bcrypt('cliente1234')]
-        );
+        $this->call([
+            AdminSeeder::class,
+            UserSeeder::class,
+        ]);
     }
 }

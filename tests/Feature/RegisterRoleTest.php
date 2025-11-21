@@ -10,38 +10,41 @@ class RegisterRoleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_register_as_admin_assigns_admin_role(): void
+    public function test_register_always_assigns_user_role(): void
     {
         $response = $this->post('/register', [
-            'name' => 'Nuevo Admin',
-            'email' => 'nuevoadmin@example.com',
+            'name' => 'Nuevo Usuario',
+            'email' => 'nuevo@example.com',
             'password' => 'Password1',
             'password_confirmation' => 'Password1',
-            'role' => 'admin',
         ]);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('users', [
-            'email' => 'nuevoadmin@example.com',
-            'role' => 'admin',
+            'email' => 'nuevo@example.com',
+            'role' => 'user',
         ]);
+
+        $user = User::where('email', 'nuevo@example.com')->firstOrFail();
+        $this->assertTrue($user->hasRole('user'));
     }
 
-
-    public function test_register_as_cliente_assigns_cliente_role(): void
+    public function test_cannot_register_admin_via_ui(): void
     {
         $response = $this->post('/register', [
-            'name' => 'Nuevo Cliente',
-            'email' => 'nuevocliente@example.com',
+            'name' => 'Intento Admin',
+            'email' => 'intento-admin@example.com',
             'password' => 'Password1',
             'password_confirmation' => 'Password1',
-            'role' => 'cliente',
         ]);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('users', [
-            'email' => 'nuevocliente@example.com',
-            'role' => 'cliente',
+            'email' => 'intento-admin@example.com',
+            'role' => 'user',
         ]);
+
+        $user = User::where('email', 'intento-admin@example.com')->firstOrFail();
+        $this->assertTrue($user->hasRole('user'));
     }
 }

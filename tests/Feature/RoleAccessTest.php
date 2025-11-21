@@ -12,6 +12,7 @@ class RoleAccessTest extends TestCase
     public function test_admin_can_access_admin_routes(): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
+        $admin->assignRole('admin');
         $response = $this->actingAs($admin)->get('/gestionar-vehiculos');
         $response->assertStatus(200);
     }
