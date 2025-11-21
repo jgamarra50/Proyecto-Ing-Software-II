@@ -80,6 +80,10 @@
     $vehiculoSeleccionado = request()->get('vehiculo');
     $infoVehiculo = $vehiculos[$vehiculoSeleccionado] ?? null;
 @endphp
+@php
+    $duracionSel = request('duracion');
+    $precioSel = request('precio');
+@endphp
 @php $qs = http_build_query(request()->only(['vehiculo','duracion','precio'])); @endphp
 <form action="{{ route('reservas.store') }}" method="post" novalidate>
 @csrf
@@ -91,14 +95,15 @@
     <div class="mb-4">
         <h2 class="text-xl font-semibold">{{ $infoVehiculo['nombre'] }}</h2>
         <p class="text-gray-700">{{ $infoVehiculo['descripcion'] }}</p>
-        <p class="text-emerald-600 font-bold mt-2">Precio: {{ $infoVehiculo['precio'] }}</p>
+        @php
+            $precioMostrar = $precioSel ? ('$'.number_format((int)$precioSel, 0, ',', '.'). ' COP') : ($infoVehiculo['precio'] ?? null);
+        @endphp
+        @if($precioMostrar)
+        <p class="text-emerald-600 font-bold mt-2">Precio: {{ $precioMostrar }}</p>
+        @endif
         <p class="text-gray-600">Tarifa inicial: {{ $infoVehiculo['tarifa_inicial'] }}</p>
     </div>
     @endif
-    @php
-        $duracionSel = request('duracion');
-        $precioSel = request('precio');
-    @endphp
                             <div class="p-8 space-y-10">
                                 <section class="space-y-6">
                                     <h2 class="text-lg font-medium">Datos personales</h2>
@@ -186,11 +191,6 @@
                                                                 <input id="recogida" name="recogida" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Parque Santander" />
                                                             </div>
                                                             <div>
-                                                                <label for="entrega" class="block text-sm font-medium">Punto de entrega
-                                                                </label>
-                                                                <input id="entrega" name="entrega" required type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Centro Comercial Cacique" />
-                                                            </div>
-                                                            <div>
                                                                 <label for="metodo" class="block text-sm font-medium">Metodo de entrega/recogida
                                                                     </label>
                                                                     <select id="metodo" name="metodo" required class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
@@ -198,12 +198,18 @@
                                                                         <option value="domicilio">Entrega a domicilio</option>
                                                                     </select>
                                                                 </div>
-                                                                <div>
-                                                                    <label for="direccion" class="block text-sm font-medium">
-                                                                        Direccion de entrega (si aplica)
-                                                                    </label>
-                                                                        <input id="direccion" name="direccion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Barrio, calle, numero" />
+                                                                <div id="derecha-contenedor">
+                                                                    <input id="direccion" name="direccion" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Barrio, calle, numero" />
+                                                                    <div id="sede-options" class="mt-2 hidden">
+                                                                        <input type="hidden" id="sede" name="sede" />
+                                                                        <div class="flex flex-wrap gap-2">
+                                                                            <button type="button" data-sede="Cañavera" class="px-3 py-1 rounded-lg border border-slate-300 hover:border-emerald-500">Cañavera</button>
+                                                                            <button type="button" data-sede="Cabecera" class="px-3 py-1 rounded-lg border border-slate-300 hover:border-emerald-500">Cabecera</button>
+                                                                            <button type="button" data-sede="Floridablanca" class="px-3 py-1 rounded-lg border border-slate-300 hover:border-emerald-500">Floridablanca</button>
+                                                                            <button type="button" data-sede="Piedecuesta" class="px-3 py-1 rounded-lg border border-slate-300 hover:border-emerald-500">Piedecuesta</button>
+                                                                        </div>
                                                                     </div>
+                                                                </div>
                                                                 </div>
                                                             </section>
                                                             <section class="space-y-6"><h2 class="text-lg font-medium">Observaciones
@@ -237,6 +243,42 @@
                     });
                     document.addEventListener('click', function() {
                         dd.classList.add('hidden');
+                    });
+                }
+
+                const metodo = document.getElementById('metodo');
+                const direccion = document.getElementById('direccion');
+                const sedeOptions = document.getElementById('sede-options');
+                const sedeHidden = document.getElementById('sede');
+                const recogidaInput = document.getElementById('recogida');
+
+                function actualizarDerecha() {
+                    if (!metodo) return;
+                    if (metodo.value === 'sede') {
+                        if (direccion) direccion.classList.add('hidden');
+                        if (sedeOptions) sedeOptions.classList.remove('hidden');
+                    } else {
+                        if (direccion) direccion.classList.remove('hidden');
+                        if (sedeOptions) sedeOptions.classList.add('hidden');
+                    }
+                }
+
+                actualizarDerecha();
+                if (metodo) metodo.addEventListener('change', actualizarDerecha);
+
+                if (sedeOptions) {
+                    sedeOptions.querySelectorAll('[data-sede]').forEach(function(btn){
+                        btn.addEventListener('click', function(){
+                            const sede = btn.getAttribute('data-sede');
+                            if (sedeHidden) sedeHidden.value = sede;
+                            if (recogidaInput && !recogidaInput.value) {
+                                recogidaInput.value = sede;
+                            }
+                            sedeOptions.querySelectorAll('[data-sede]').forEach(function(b){
+                                b.classList.remove('bg-emerald-600','text-white');
+                            });
+                            btn.classList.add('bg-emerald-600','text-white');
+                        });
                     });
                 }
             });

@@ -58,6 +58,9 @@
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Fecha de reserva</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Lugar de reserva</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Método de entrega/recogida</th>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Fecha de reserva</th>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Hora de inicio</th>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Accesorios</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Nombre del vehículo</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Número de serie</th>
                                 <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-emerald-800">Acciones</th>
@@ -76,16 +79,28 @@
                             @forelse(($reservas ?? []) as $r)
                             @php
                                 $ent = ($entregas ?? collect())->get($r->id);
-                                $metodo = $ent
-                                    ? ($ent->domicilio ? 'Entrega a domicilio' : ('Entrega en sede'))
+                                $metodoBase = $ent
+                                    ? ($ent->domicilio ? 'Entrega a domicilio' : 'Entrega en sede')
                                     : ($r->metodo === 'domicilio' ? 'Entrega a domicilio' : 'Entrega en sede');
+                                $detalleLugar = $ent
+                                    ? ($ent->domicilio ? ($ent->direccion ?? null) : ($ent->sede ?? null))
+                                    : ($r->metodo === 'domicilio' ? ($r->direccion ?? null) : ($r->sede ?? null));
+                                $metodo = $detalleLugar ? ($metodoBase.' - '.$detalleLugar) : $metodoBase;
                                 $vehiculoNombre = $vehiculosNombres[$r->vehiculo] ?? ucfirst($r->tipo ?? 'Vehículo');
                                 $fechaHora = trim(($r->fecha ?? '').' '.($r->hora ?? ''));
+                                $accArr = [];
+                                if (!empty($r->accesorios)) {
+                                    try { $accArr = json_decode($r->accesorios, true) ?: []; } catch (\Throwable $e) { $accArr = []; }
+                                }
+                                $accTexto = empty($accArr) ? 'No' : implode(', ', $accArr);
                             @endphp
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $fechaHora ?: '-' }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $r->recogida ?? '-' }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $metodo }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $r->fecha ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $r->hora ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $accTexto }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $vehiculoNombre }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $r->numero_serie ?? '—' }}</td>
                                 <td class="px-6 py-4 text-sm">
@@ -102,7 +117,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-4 text-sm text-gray-500">No tienes reservas registradas.</td>
+                                <td colspan="9" class="px-6 py-4 text-sm text-gray-500">No tienes reservas registradas.</td>
                             </tr>
                             @endforelse
                         </tbody>
