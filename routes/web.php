@@ -29,3 +29,15 @@ Route::get('/gestionar-vehiculos', function () {
 Route::get('/elegir-metodo-entrega', function () {
     return view('elegir-metodo-entrega');
 });
+
+Route::get('/registrar-entrega-vehiculo', function () {
+    return view('registrar-entrega-de-vehiculo');
+});
+
+Route::get('/estado-vehiculo', function () {
+    return view('estado-vehiculo');
+});
+
+Route::get('/registrar-mantenimiento-completo', function () {
+    return view('registrar-mantenimiento-completo');
+});
